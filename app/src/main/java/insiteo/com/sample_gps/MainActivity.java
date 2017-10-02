@@ -15,9 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.insiteo.lbs.Insiteo;
+import com.insiteo.lbs.common.CommonConstants;
 import com.insiteo.lbs.common.ISError;
 import com.insiteo.lbs.common.auth.entities.ISUserSite;
 import com.insiteo.lbs.common.init.ISEPackageType;
+import com.insiteo.lbs.common.init.ISEServerType;
 import com.insiteo.lbs.common.init.ISPackage;
 import com.insiteo.lbs.common.init.listener.ISIInitListener;
 import com.insiteo.lbs.common.utils.geometry.ISGeoMatrix;
@@ -26,6 +28,7 @@ import com.insiteo.lbs.location.ISILocationListener;
 import com.insiteo.lbs.location.ISLocation;
 import com.insiteo.lbs.location.ISLocationProvider;
 import com.insiteo.lbs.map.entities.ISMap;
+import com.insiteo.lbs.map.render.ISERenderMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +54,13 @@ public class MainActivity extends AppCompatActivity implements ISIInitListener, 
         if(!permRequired)
             init();
     }
+    
     private void init(){
-        Insiteo.getInstance().initialize(this, this);
+        String apiKey = "2ad95a1d-713d-4100-8d9f-4917f8dc8de7";
+        String url = "https://services2." + ISEServerType.PROD + ".insiteo.com/v" +
+                CommonConstants.URL_VERSION + "/Insiteo.Dispatch." + ISEServerType.PROD + "/Insiteo.Dispatch.svc";
+        Insiteo.getInstance().initialize(this, this, apiKey, null, false, ISEServerType.PROD, url, ISERenderMode.MODE_2D);
     }
-
 
     @Override
     public void onInitDone(ISError error, ISUserSite suggestedSite, boolean fromLocalCache) {
